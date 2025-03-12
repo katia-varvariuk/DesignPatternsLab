@@ -10,17 +10,15 @@ import org.example.creational.prototype.SpecialOffer;
 import org.example.creational.prototype.SpecialOfferRegistry;
 import org.example.creational.prototype.SummerOffer;
 import org.example.creational.singleton.HotelManager;
-import org.example.creational.singleton.LoggingService;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        LoggingService logger = LoggingService.getInstance();
-        logger.logInfo("Hotel Management System started");
+        System.out.println("Hotel Management System started");
 
         // Using Factory Method
-        logger.logInfo("Creating rooms using Factory Method");
+        System.out.println("Creating rooms using Factory Method");
         RoomFactory roomFactory = new RoomFactory();
         Room standardRoom = roomFactory.createRoom("STANDARD");
         Room deluxeRoom = roomFactory.createRoom("DELUXE");
@@ -32,7 +30,7 @@ public class Main {
         System.out.println(suiteRoom.getDescription() + " - $" + suiteRoom.getPrice());
 
         // Using Abstract Factory
-        logger.logInfo("Creating furniture using Abstract Factory");
+        System.out.println("Creating furniture using Abstract Factory");
         FurnitureFactory modernFactory = new ModernFurnitureFactory();
         FurnitureFactory classicFactory = new ClassicFurnitureFactory();
         FurnitureFactory vintageFactory = new VintageFurnitureFactory();
@@ -62,7 +60,7 @@ public class Main {
         System.out.println(vintageTable.getDescription());
 
         // Using Builder Pattern
-        logger.logInfo("Creating reservations using Builder Pattern");
+        System.out.println("Creating reservations using Builder Pattern");
         Reservation customReservation = new Reservation.ReservationBuilder("John Doe", "DELUXE", 3)
                 .withBreakfast()
                 .withSpaPackage()
@@ -80,7 +78,7 @@ public class Main {
         System.out.println("\nFamily Reservation:\n" + familyReservation);
 
         // Using Prototype Pattern
-        logger.logInfo("Creating special offers using Prototype Pattern");
+        System.out.println("Creating special offers using Prototype Pattern");
         SpecialOfferRegistry offerRegistry = new SpecialOfferRegistry();
 
         SpecialOffer weekendOffer = offerRegistry.getOffer("WEEKEND");
@@ -109,40 +107,40 @@ public class Main {
         }
 
         // Using Singleton Pattern
-        logger.logInfo("Using Hotel Manager singleton");
+        System.out.println("\n----- Using Hotel Manager Singleton -----");
         HotelManager hotelManager = HotelManager.getInstance();
-        System.out.println("\n----- Hotel Status -----");
-        System.out.println(hotelManager.getHotelStatus());
+        System.out.println("Hotel Info:");
+        System.out.println(hotelManager.getHotelInfo());
 
-        // Add some reservations
-        hotelManager.addReservation(customReservation);
-        hotelManager.addReservation(businessReservation);
-        hotelManager.addReservation(familyReservation);
+        // Book some rooms
+        System.out.println("\nBooking rooms:");
+        hotelManager.bookRoom();
+        hotelManager.bookRoom();
+        hotelManager.bookRoom();
 
-        logger.logInfo("Added 3 reservations to the hotel");
+        // Show updated hotel info
+        System.out.println("\nUpdated Hotel Info:");
+        System.out.println(hotelManager.getHotelInfo());
 
-        System.out.println("\n----- Updated Hotel Status -----");
-        System.out.println(hotelManager.getHotelStatus());
+        // Checkout a room
+        System.out.println("\nPerforming checkout:");
+        hotelManager.checkoutRoom();
 
-        // Cancel a reservation
-        String reservationToCancel = customReservation.getReservationId();
-        hotelManager.cancelReservation(reservationToCancel);
-        logger.logInfo("Cancelled 1 reservation");
+        // Update hotel properties
+        System.out.println("\nUpdating hotel properties:");
+        hotelManager.setHotelName("Grand Royal Palace");
+        hotelManager.setRestaurantOpen(false);
 
-        System.out.println("\n----- Final Hotel Status -----");
-        System.out.println(hotelManager.getHotelStatus());
+        // Show final hotel status
+        System.out.println("\nFinal Hotel Info:");
+        System.out.println(hotelManager.getHotelInfo());
 
-        // Display all current reservations
-        System.out.println("\n----- Current Active Reservations -----");
-        for (Reservation res : hotelManager.getAllReservations()) {
-            System.out.println("ID: " + res.getReservationId() + " - Guest: " + res.getGuestName() +
-                    " - Room: " + res.getRoomType() + " - Check-in: " + res.getCheckInDate());
-        }
+        // Demonstrate singleton behavior
+        System.out.println("\nDemonstrating Singleton behavior:");
+        HotelManager sameManager = HotelManager.getInstance();
+        System.out.println("Is same instance? " + (hotelManager == sameManager));
+        System.out.println("Hotel name from second reference: " + sameManager.getHotelName());
 
-        logger.logInfo("Hotel Management System shutting down");
-        System.out.println("\n----- System Logs -----");
-        for (String log : logger.getLogs()) {
-            System.out.println(log);
-        }
+        System.out.println("\nHotel Management System shutting down");
     }
 }

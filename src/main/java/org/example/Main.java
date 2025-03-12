@@ -118,7 +118,6 @@ public class Main {
         hotelManager.bookRoom();
         hotelManager.bookRoom();
 
-        // Show updated hotel info
         System.out.println("\nUpdated Hotel Info:");
         System.out.println(hotelManager.getHotelInfo());
 
@@ -126,16 +125,13 @@ public class Main {
         System.out.println("\nPerforming checkout:");
         hotelManager.checkoutRoom();
 
-        // Update hotel properties
         System.out.println("\nUpdating hotel properties:");
         hotelManager.setHotelName("Grand Royal Palace");
         hotelManager.setRestaurantOpen(false);
 
-        // Show final hotel status
         System.out.println("\nFinal Hotel Info:");
         System.out.println(hotelManager.getHotelInfo());
 
-        // Demonstrate singleton behavior
         System.out.println("\nDemonstrating Singleton behavior:");
         HotelManager sameManager = HotelManager.getInstance();
         System.out.println("Is same instance? " + (hotelManager == sameManager));
